@@ -4,12 +4,25 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions \relax
 
-\LoadClass[twocolumn, 10pt]{article}
+\LoadClass[twocolumn, 9pt]{article}
+\columnsep 2pc
 
 \RequirePackage{crimson}
 \RequirePackage[a4paper,total={6.7in, 9in}]{geometry}
-
-\columnsep 2pc
+\RequirePackage{xcolor}
+\definecolor{@cfdink}{RGB}{6, 47, 79}
+\definecolor{@cfdposy}{RGB}{129, 55, 114}
+\definecolor{@cfdembers}{RGB}{184, 38, 1}
+\RequirePackage{hyperref}
+\hypersetup{
+  colorlinks,
+  citecolor=cfdink,
+  filecolor=black,
+  linkcolor=cfdember,
+  urlcolor=cfdembers
+}
+\RequirePackage{sectsty}
+\sectionfont{\large\MakeUppercase}
 
 \newcommand\numberOfAuthors[1]{\def\cfdnoa{#1}}
 \def\and{\end{tabular} & \begin{tabular}[t]{c}\large}
