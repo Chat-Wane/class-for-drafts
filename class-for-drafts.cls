@@ -9,6 +9,7 @@
 
 \RequirePackage{crimson}
 \RequirePackage[a4paper,total={6.7in, 9in}]{geometry}
+\RequirePackage[numbers]{natbib}
 \RequirePackage{xcolor}
 \definecolor{@cfdink}{RGB}{6, 47, 79}
 \definecolor{@cfdposy}{RGB}{129, 55, 114}
@@ -16,10 +17,10 @@
 \RequirePackage{hyperref}
 \hypersetup{
   colorlinks,
-  citecolor=cfdink,
+  citecolor=@cfdink,
   filecolor=black,
-  linkcolor=cfdember,
-  urlcolor=cfdembers
+  linkcolor=@cfdembers,
+  urlcolor=@cfdembers
 }
 \RequirePackage{sectsty}
 \sectionfont{\large\MakeUppercase}
