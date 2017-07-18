@@ -10,6 +10,7 @@
 \RequirePackage{crimson}
 \RequirePackage[a4paper,total={6.7in, 9in}]{geometry}
 \RequirePackage[numbers]{natbib}
+\bibliographystyle{plain}
 \RequirePackage{xcolor}
 \definecolor{@cfdink}{RGB}{6, 47, 79}
 \definecolor{@cfdposy}{RGB}{129, 55, 114}
@@ -17,7 +18,7 @@
 \RequirePackage{hyperref}
 \hypersetup{
   colorlinks,
-  citecolor=@cfdink,
+  citecolor=@cfdposy!75,
   filecolor=black,
   linkcolor=@cfdembers,
   urlcolor=@cfdembers
