@@ -35,11 +35,14 @@
 \fancyhead[R]{\emph{\@proceedings}}
 \fancyfoot{}
 
-\newcommand\@copyrightfootnote[1]{%
-  \let\thefootnote\relax\footnotetext{\hspace{-\parindent}#1}%
-  \let\thefootnote\svthefootnote%
-}
 
+\RequirePackage[para*]{manyfoot}
+\SetFootnoteHook{\kern -3pt \hrule width \columnwidth height 0.5pt \kern 2pt}
+\DeclareNewFootnote[para]{A}[roman]
+\newcommand\@copyrightfootnote[1]{%
+  \let\thefootnoteA\relax\footnotetextA{#1}%
+  \let\thefootnoteA\svthefootnote%
+}
 \renewcommand\copyright[1]{\def\@copyright{#1}}
 
 \newcommand\numberOfAuthors[1]{\def\@numberOfAuthors{#1}}
