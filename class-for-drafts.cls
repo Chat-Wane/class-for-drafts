@@ -12,31 +12,48 @@
 \RequirePackage[numbers]{natbib}
 \bibliographystyle{plain}
 \RequirePackage{xcolor}
-\definecolor{@cfdink}{RGB}{6, 47, 79}
-\definecolor{@cfdposy}{RGB}{129, 55, 114}
-\definecolor{@cfdembers}{RGB}{184, 38, 1}
+\definecolor{@ink}{RGB}{6, 47, 79}
+\definecolor{@posy}{RGB}{129, 55, 114}
+\definecolor{@embers}{RGB}{184, 38, 1}
 \RequirePackage{hyperref}
 \hypersetup{
   colorlinks,
-  citecolor=@cfdposy!75,
+  citecolor=@posy!75,
   filecolor=black,
-  linkcolor=@cfdembers,
-  urlcolor=@cfdembers
+  linkcolor=@embers,
+  urlcolor=@embers
 }
 \RequirePackage{sectsty}
 \sectionfont{\large\MakeUppercase}
+\RequirePackage{fancyhdr}
+\def\@conference{}
+\newcommand\proceedings[1]{\def\@proceedings{#1}}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead{}
+\fancyhead[L]{\emph{draft}}
+\fancyhead[R]{\emph{\@proceedings}}
+\fancyfoot{}
 
-\newcommand\numberOfAuthors[1]{\def\cfdnoa{#1}}
+\newcommand\@copyrightfootnote[1]{%
+  \let\thefootnote\relax\footnotetext{\hspace{-\parindent}#1}%
+  \let\thefootnote\svthefootnote%
+}
+
+\renewcommand\copyright[1]{\def\@copyright{#1}}
+
+\newcommand\numberOfAuthors[1]{\def\@numberOfAuthors{#1}}
 \def\and{\end{tabular} & \begin{tabular}[t]{c}\large}
 \def\aff{\\}
 
 \def\maketitle{
   \twocolumn[
+  \thispagestyle{empty}
   \begin{center}
     {\LARGE\bfseries\@title\par}
     {\vspace{0.5cm}}
     {\normalsize%
-      \begin{tabular}[t]{*{\cfdnoa}{c}}%
+      \begin{tabular}[t]{*{\@numberOfAuthors}{c}}%
         \begin{tabular}[t]{c}%
           \large\@author%
         \end{tabular}
@@ -44,6 +61,9 @@
     \vspace{0.5cm}
   \end{center}
   ]
+                         
+  \ifcsname @copyright\endcsname%
+    \@copyrightfootnote{\@copyright}
+  \fi
 }
                            
-\pagestyle{empty}
