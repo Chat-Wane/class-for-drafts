@@ -35,6 +35,13 @@
 \fancyhead[R]{\emph{\@proceedings}}
 \fancyfoot{}
 
+\fancypagestyle{firstpagestyle} {
+  \fancyhead{}
+  \fancyfoot{}
+  \fancyfoot[R]{\emph{draft}}
+  \fancyfoot[L]{\emph{\@proceedings}}
+}
+
 
 \RequirePackage[para*]{manyfoot}
 \SetFootnoteHook{\kern -3pt \hrule width \columnwidth height 0.5pt \kern 2pt}
@@ -51,7 +58,7 @@
 
 \def\maketitle{
   \twocolumn[
-  \thispagestyle{empty}
+  \thispagestyle{firstpagestyle}
   \begin{center}
     {\LARGE\bfseries\@title\par}
     {\vspace{0.5cm}}
