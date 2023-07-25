@@ -1,13 +1,39 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{class-for-drafts}[2017/07/18 Class to standardize draft papers.]
+\RequirePackage{etoolbox} %% ease variables
 
+\newbool{inCrimsonFont}
+\newbool{inFellFont}
+
+\DeclareOption{crimson}{\booltrue{inCrimsonFont}}
+\DeclareOption{fell}{\booltrue{inFellFont}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions \relax
 
 \LoadClass[twocolumn, 9pt]{article}
 \columnsep 2pc
 
-\RequirePackage{crimson}
+\ifbool{inCrimsonFont}{ %% Crimson is a clean font
+  \RequirePackage{crimson}
+}
+
+\ifbool{inFellFont} { %% Fell font is a centuries old font
+  \RequirePackage[T1]{fontenc}
+  \RequirePackage{fontspec}
+  \fontspec[AutoFakeBold=2.5]{IMFellEnglish-Regular.ttf}
+  
+  \setmainfont{IMFellEnglish}[
+    Path=./,
+    Extension = .ttf,
+    UprightFont = *-Regular,
+    ItalicFont = *-Italic,
+    BoldFont= *-Regular,
+    BoldFeatures={FakeBold=3},
+  ]
+}
+
+
+
 \RequirePackage[a4paper,total={6.7in, 9in}]{geometry}
 \RequirePackage[numbers]{natbib}
 \bibliographystyle{plain}
@@ -56,6 +82,19 @@
 \def\and{\end{tabular} & \begin{tabular}[t]{c}\large}
 \def\aff{\\}
 
+\RequirePackage{lettrine}
+\RequirePackage{xstring}
+
+\newcommand*\Abstract[1]{\def\@abstract{#1}}
+
+\renewenvironment{abstract}{% Comes from package "abstract"
+  \small
+  \begin{center}%
+    {\bfseries \abstractname\vspace{-.5em}\vspace{\z@}}%
+  \end{center}%
+  \quotation
+}
+
 \def\maketitle{
   \twocolumn[
   \thispagestyle{firstpagestyle}
@@ -70,6 +109,10 @@
       \end{tabular}\par}
     \vspace{0.5cm}
   \end{center}
+  \begin{abstract}
+    \@abstract
+  \end{abstract}
+  \vspace{2em}
   ]
                          
   \ifcsname @copyright\endcsname%
@@ -78,3 +121,5 @@
 }
                            
 \newcommand{\keywords}[1]{\vspace{0.5cm} \noindent \textit{\textbf{Keywords:} #1}}
+
+
