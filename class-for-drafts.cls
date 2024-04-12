@@ -10,11 +10,12 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions \relax
 
-\LoadClass[twocolumn, 9pt]{article}
-\columnsep 2pc
+\LoadClass[twocolumn]{article}
+\columnsep 1pc
 
 \ifbool{inCrimsonFont}{ %% Crimson is a clean font
   \RequirePackage{crimson}
+  \usepackage[fontsize=10pt]{fontsize}
 }
 
 \ifbool{inFellFont} { %% Fell font is a centuries old font
@@ -30,13 +31,17 @@
     BoldFont= *-Regular,
     BoldFeatures={FakeBold=3},
   ]
+  \usepackage[fontsize=9.5pt]{fontsize}
 }
+
+\newenvironment{acks}{\paragraph{Acknowledgments}}{}
 
 
 
-\RequirePackage[a4paper,total={6.7in, 9in}]{geometry}
+%\RequirePackage[a4paper,total={6.7in, 9in}]{geometry}
+\RequirePackage[a4paper, total={6.7in, 9.7in}]{geometry}
 \RequirePackage[numbers]{natbib}
-\bibliographystyle{plain}
+% \bibliographystyle{plain} %% leave the bibstyle to the .tex file
 \RequirePackage{xcolor}
 \definecolor{@ink}{RGB}{6, 47, 79}
 \definecolor{@posy}{RGB}{129, 55, 114}
@@ -49,13 +54,19 @@
   linkcolor=@embers,
   urlcolor=@embers
 }
+
 \RequirePackage{sectsty}
 \sectionfont{\large\MakeUppercase}
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\MakeUppercase}{\thesection}{0.2em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{0.2em}{}
+            
 \RequirePackage{fancyhdr}
 \def\@conference{}
 \newcommand\proceedings[1]{\def\@proceedings{#1}}
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
+\setlength{\topmargin}{-4em}
 \fancyhead{}
 \fancyhead[L]{\emph{draft}}
 \fancyhead[R]{\emph{\@proceedings}}
@@ -80,15 +91,34 @@
 
 \def\@numberOfAuthors{1000}
 \def\and{\end{tabular} & \begin{tabular}[t]{c}\large}
+%% When there are too many authors, new line, centered and all
+\def\lineAnd{\end{tabular}\end{tabular}\vspace{1.5em}
+      \begin{tabular}[t]{*{\@numberOfAuthors}{c}}%
+        \begin{tabular}[t]{c}\large%
+}
 \def\aff{\\}
+
 
 \RequirePackage{lettrine}
 \RequirePackage{xstring}
+\RequirePackage{trimspaces}
 
-\newcommand*\Abstract[1]{\def\@abstract{#1}}
+\newcommand*{\trim}[1]{%
+  \trim@spaces@noexp{#1}%
+}
+
+\newcommand*\Abstract[1]{\def\@abstract{%
+    %% \begingroup%
+    %% \noexpandarg%
+    %% \StrLeft{#1}{1}[\first]%
+    %% \StrGobbleLeft{#1}{1}[\@rest]%
+    %% \noindent\lettrine{\first}{}\@rest%
+    %% \endgroup%
+    \noindent\trim{#1}
+}}
 
 \renewenvironment{abstract}{% Comes from package "abstract"
-  \small
+  %\small%
   \begin{center}%
     {\bfseries \abstractname\vspace{-.5em}\vspace{\z@}}%
   \end{center}%
@@ -107,12 +137,12 @@
           \large\@author%
         \end{tabular}
       \end{tabular}\par}
-    \vspace{0.5cm}
-  \end{center}
+    \vspace{0.5cm}%
+  \end{center}%
   \begin{abstract}
     \@abstract
   \end{abstract}
-  \vspace{2em}
+  \vspace{2.8em}
   ]
                          
   \ifcsname @copyright\endcsname%
